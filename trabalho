@@ -64,21 +64,16 @@
             margin-bottom: 20px;
         }
 
-        #balao {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background-color: red;
-            border-radius: 50%;
-            transition: height 0.5s, width 0.5s;
+        #balaoImg {
+            width: 100px;
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.5s;
         }
 
         #bomba {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background-color: black;
-            border-radius: 50%;
+            width: 100px;
+            height: auto;
             cursor: pointer;
         }
 
@@ -95,6 +90,16 @@
             color: white;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
+
+        @keyframes inflar {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(2); }
+        }
+
+        #balaoImg.inflando {
+            animation: inflar 2s ease-in-out forwards;
+        }
     </style>
 </head>
 <body>
@@ -105,12 +110,12 @@
     </div>
 
     <div id="container">
-        <div id="balao"></div>
-        <div id="bomba" onclick="inflarBalao()"></div>
+        <img id="bomba" src="https://static.vecteezy.com/ti/vetor-gratis/p1/6425349-estilo-de-desenho-animado-de-bomba-com-pavio-em-chamas-vetor.jpg" alt="Bomba" onclick="inflarBalaoImg()">
+        <img id="balaoImg" src="https://static.vecteezy.com/system/resources/previews/013/362/861/non_2x/red-balloon-birthday-party-free-png.png" alt="Balão">
     </div>
 
     <div id="matriz"></div>
-
+    
     <script>
         let timeoutFugitivo, timeoutAleatorio;
 
@@ -211,7 +216,24 @@
             }
         }
 
+        let infladoImg = false;
+
+        function inflarBalaoImg() {
+            if (!infladoImg) {
+                let balaoImg = document.getElementById('balaoImg');
+                balaoImg.classList.add('inflando');
+                setTimeout(function() {
+                    balaoImg.classList.remove('inflando');
+                    alert('O balão estourou!');
+                }, 2000);
+                infladoImg = true;
+            } else {
+                alert('O balão já está inflado! Clique na bomba para estourá-lo.');
+            }
+        }
+
         resetarTimeouts();
+        
     </script>
 </body>
 </html>
